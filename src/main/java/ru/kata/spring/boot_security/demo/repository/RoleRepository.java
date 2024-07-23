@@ -9,6 +9,5 @@ import java.util.List;
 
 @Repository
 public interface RoleRepository extends CrudRepository<Role, Long> {
-    //@Query("Select r from Role r")
     List<Role> findAll();
 }

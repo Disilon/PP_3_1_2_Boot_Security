@@ -11,8 +11,8 @@
         <label>User Name: </label>
         <label th:text="*{username}"></label>
         <br/>
-        <label for="rawPassword">Password: </label>
-        <input type="text" th:field="*{rawPassword}" value="" id="rawPassword"/>
+        <label for="rawPassword" title="Leave password empty if you don't want to change it">Password*: </label>
+        <input type="text" th:field="*{rawPassword}" id="rawPassword"/>
         <br/>
         <label for="name">First Name: </label>
         <input type="text" th:field="*{firstName}" id="name"/>
@@ -43,6 +43,9 @@
     </form>
     <div th:if="${errors}">
         <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error</p>
+    </div>
+    <div>
+        <p>*Leave password empty if you don't want to change it</p>
     </div>
 </body>
 </html>

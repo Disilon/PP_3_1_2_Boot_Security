@@ -62,7 +62,6 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/admin/edit?id=" + id;
         }
-        System.out.println("No errors");
         userService.save(user);
         return "redirect:/admin/admin";
     }

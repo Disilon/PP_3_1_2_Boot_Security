@@ -15,6 +15,7 @@
             <th>Last Name</th>
             <th>Age</th>
             <th>Email</th>
+            <th>Roles</th>
             <th colspan="2">Action</th>
         </tr>
         <tr th:each="user : ${users}">
@@ -23,11 +24,12 @@
             <td th:text="${user.lastName}"></td>
             <td th:text="${user.age}"></td>
             <td th:text="${user.email}"></td>
+            <td th:text="${user.showRoles()}"></td>
             <td><a th:href="@{/admin/edit(id=${user.id})}">edit</a></td>
             <td><a th:href="@{/admin/delete(id=${user.id})}">delete</a></td>
         </tr>
         <tr>
-            <td colspan="8">
+            <td colspan="9">
                 <a href="/register/">add User</a>
             </td>
         </tr>

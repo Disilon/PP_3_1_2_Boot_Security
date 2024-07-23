@@ -17,6 +17,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -145,6 +146,18 @@ public class User {
             sb.append(role.toString()).append(" ");
         }
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return Objects.equals(getId(), user.getId()) && Objects.equals(getUsername(), user.getUsername());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUsername());
     }
 }
 

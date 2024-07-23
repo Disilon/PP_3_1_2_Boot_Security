@@ -67,7 +67,7 @@ public class AdminController {
     }
 
     @GetMapping(value = "/delete")
-    public String delete(@RequestParam(name = "id") Long id) throws Exception {
+    public String delete(@RequestParam(name = "id") Long id) {
         userService.deleteById(id);
         return "redirect:/admin/admin";
     }

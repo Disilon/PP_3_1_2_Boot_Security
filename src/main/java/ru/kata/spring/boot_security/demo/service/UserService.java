@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,13 +45,13 @@ public class UserService {
     }
 
     public List<User> findAll() {
-        return userRepository.findAll();
+        return new HashSet<User>(userRepository.findAll()).stream().toList();
     }
 
     @Transactional
-    public void deleteById(Long id) throws Exception {
+    public void deleteById(Long id) throws UsernameNotFoundException {
         if (!userRepository.existsById(id)) {
-            throw new Exception("User not found");
+            throw new UsernameNotFoundException("User not found");
         }
         userRepository.deleteById(id);
     }

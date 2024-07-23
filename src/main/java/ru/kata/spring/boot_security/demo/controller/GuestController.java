@@ -1,10 +1,13 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +28,6 @@ public class GuestController {
     private final UserService userService;
     private final RoleService roleService;
 
-
     @Autowired
     public GuestController(UserValidator userValidator, UserService userService, RoleService roleService) {
         this.userValidator = userValidator;
@@ -43,7 +45,7 @@ public class GuestController {
     }
 
     @PostMapping(value = "/register")
-    public String create(@ModelAttribute @Validated({Default.class, CreateAction.class}) User user,
+    public String create(Authentication authentication, @ModelAttribute @Validated({Default.class, CreateAction.class}) User user,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         userValidator.validate(user, bindingResult);
@@ -53,7 +55,7 @@ public class GuestController {
             return "redirect:/register";
         }
         userService.save(user);
-        if (user.getRoles().contains("ROLE_ADMIN")) {
+        if (authentication != null && authentication.getAuthorities().toString().contains("ADMIN")) {
             return "redirect:/admin/admin";
         } else {
             return "redirect:/login";

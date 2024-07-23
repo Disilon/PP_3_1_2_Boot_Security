@@ -35,7 +35,13 @@ public class UserService {
     }
 
     @Transactional
-    public void save(User user) {
+    public void create(User user) {
+        user.setPassword(passwordEncoder.encode(user.getRawPassword()));
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void update(User user) {
         if (!user.getRawPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getRawPassword()));
         } else {

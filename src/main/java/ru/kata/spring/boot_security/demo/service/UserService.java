@@ -1,64 +1,20 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
-import java.util.HashSet;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
-@Service
-@Transactional(readOnly = true)
-public class UserService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+public interface UserService {
+    User findById(Long id);
 
-    @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    User findByUsername(String username);
 
-    public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
+    void create(User user);
 
+    void update(User user);
 
-    public User findByUsername(String username) {
-        Optional<User> user = userRepository.findByUsername(username);
-        return user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
+    List<User> findAll();
 
-    @Transactional
-    public void create(User user) {
-        user.setPassword(passwordEncoder.encode(user.getRawPassword()));
-        userRepository.save(user);
-    }
-
-    @Transactional
-    public void update(User user) {
-        if (!user.getRawPassword().isEmpty()) {
-            user.setPassword(passwordEncoder.encode(user.getRawPassword()));
-        } else {
-            user.setPassword(findById(user.getId()).getPassword());
-        }
-        userRepository.save(user);
-    }
-
-    public List<User> findAll() {
-        return new HashSet<User>(userRepository.findAll()).stream().toList();
-    }
-
-    @Transactional
-    public void deleteById(Long id) throws UsernameNotFoundException {
-        if (!userRepository.existsById(id)) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        userRepository.deleteById(id);
-    }
+    void deleteById(Long id) throws EntityNotFoundException;
 }

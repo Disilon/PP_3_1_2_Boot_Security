@@ -1,28 +1,88 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${user.getUsername()}"></title>
+    <link rel="shrotcut icon" href="https://static-00.iconduck.com/assets.00/spring-icon-2048x2045-yufnoc34.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <title>User page</title>
 </head>
 <body>
-    <div th:insert="~{fragment :: header}"></div>
-    <label>User Name: </label>
-    <label th:text="${user.username}"></label>
-    <br/>
-    <label>First Name: </label>
-    <label th:text="${user.firstName}"></label>
-    <br/>
-    <label>Last Name: </label>
-    <label th:text="${user.lastName}"></label>
-    <br/>
-    <label>Age: </label>
-    <label th:text="${user.age}"></label>
-    <br/>
-    <label>Email: </label>
-    <label th:text="${user.email}"></label>
-    <br/>
-    <label>Roles: </label>
-    <label th:text="${user.showRoles()}"></label>
+    <nav class="navbar navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+                <span class="navbar-text">
+                    <h5 class="text-white bg-dark">
+                        <strong class="fs-4" th:text="${user.getUsername()}"></strong>
+                        with roles:
+                        <a th:text="${user.showRoles()}"></a>
+                    </h5>
+                </span>
+            <ul class="navbar-nav px-4">
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid bg-light rounded">
+        <div class="row vh-100">
+            <div class="col-2 mt-3 bg-white rounded">
+                <ul class="nav flex-sm-column">
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link rounded"
+                           href="#" th:href="@{/admin}">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded" th:classappend="${'active bg-primary text-white'}"
+                           href="#" th:href="@{/user}" aria-current="page">User</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-10 mt-2">
+                <h1>User Information-page</h1>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="users" role="tabpanel"
+                         aria-labelledby="users-tab">
+                        <div class="card">
+                            <div class="card-header bg-light mb-3">
+                                <p class="fw-bold h5 mt-1">About user</p>
+                            </div>
+                            <div class="card-body" th:object="${user}">
+                                <table class="table table-striped border-top">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"><strong>Id</strong></th>
+                                            <th scope="col"><strong>Username</strong></th>
+                                            <th scope="col"><strong>Name</strong></th>
+                                            <th scope="col"><strong>Last name</strong></th>
+                                            <th scope="col"><strong>Age</strong></th>
+                                            <th scope="col"><strong>E-mail</strong></th>
+                                            <th scope="col"><strong>Roles</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><a th:text="${user.getId()}"></a></td>
+                                            <td><a th:text="${user.getUsername()}"></a></td>
+                                            <td><a th:text="${user.getFirstName()}"></a></td>
+                                            <td><a th:text="${user.getLastName()}"></a></td>
+                                            <td><a th:text="${user.getAge()}"></a></td>
+                                            <td><a th:text="${user.getEmail()}"></a></td>
+                                            <td><a th:text="${user.showRoles()}"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

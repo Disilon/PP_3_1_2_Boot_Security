@@ -63,6 +63,17 @@ public class User {
     public User() {
     }
 
+    public User(String username, String rawPassword, String firstName, String lastName, int age, String email,
+                List<Role> roles) {
+        this.rawPassword = rawPassword;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.email = email;
+        this.roles = roles;
+        this.username = username;
+    }
+
     public Long getId() {
         return id;
     }
@@ -137,7 +148,17 @@ public class User {
 
     @Override
     public String toString() {
-        return username;
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", rawPassword='" + rawPassword + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 
     public String showRoles() {

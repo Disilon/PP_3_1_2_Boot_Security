@@ -29,10 +29,8 @@ public class UserController {
 
     @GetMapping(value = "/user")
     public String info(Principal principal, ModelMap model) {
-        List<Role> roles = roleService.findAll();
-        User user = userService.findByUsername(principal.getName());
-        model.addAttribute("user", user);
-        model.addAttribute("roles", roles);
+        model.addAttribute("user", userService.findByUsername(principal.getName()));
+        model.addAttribute("roles", roleService.findAll());
         return "user";
     }
 }

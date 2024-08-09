@@ -166,6 +166,7 @@ public class User {
         for (Role role : roles) {
             sb.append(role.toString()).append(" ");
         }
+        sb.replace(sb.length() - 1, sb.length(), "");
         return sb.toString();
     }
 

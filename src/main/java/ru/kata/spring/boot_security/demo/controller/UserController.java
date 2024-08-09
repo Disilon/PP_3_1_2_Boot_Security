@@ -15,22 +15,8 @@ import java.util.List;
 
 @Controller
 public class UserController {
-    private final UserValidator userValidator;
-    private final UserService userService;
-    private final RoleService roleService;
-
-
-    @Autowired
-    public UserController(UserValidator userValidator, UserService userService, RoleService roleService) {
-        this.userValidator = userValidator;
-        this.userService = userService;
-        this.roleService = roleService;
-    }
-
     @GetMapping(value = "/user")
-    public String info(Principal principal, ModelMap model) {
-        model.addAttribute("user", userService.findByUsername(principal.getName()));
-        model.addAttribute("roles", roleService.findAll());
+    public String info() {
         return "user";
     }
 }

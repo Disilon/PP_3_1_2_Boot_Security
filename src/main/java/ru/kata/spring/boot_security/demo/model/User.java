@@ -1,5 +1,7 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import ru.kata.spring.boot_security.demo.validation.UserInfo;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +19,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
+@UserInfo
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

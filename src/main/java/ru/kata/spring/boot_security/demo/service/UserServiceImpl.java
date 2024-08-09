@@ -11,7 +11,6 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import javax.validation.Valid;
 import javax.validation.Validator;
 import java.util.HashSet;
 import java.util.List;
@@ -47,15 +46,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void create(@Valid User user) {
+    public void create(User user) {
         Set<ConstraintViolation<User>> violations = validator.validate(user);
 
         if (!violations.isEmpty()) {
             StringBuilder sb = new StringBuilder();
             for (ConstraintViolation<User> constraintViolation : violations) {
                 sb.append(constraintViolation.getMessage());
+                sb.append(System.lineSeparator());
             }
-            throw new ConstraintViolationException("Error occurred: " + sb, violations);
+            throw new ConstraintViolationException(sb.toString(), violations);
         }
         user.setPassword(passwordEncoder.encode(user.getRawPassword()));
         userRepository.save(user);
@@ -63,7 +63,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void update(@Valid User user) {
+    public void update(User user) {
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+
+        if (!violations.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (ConstraintViolation<User> constraintViolation : violations) {
+                sb.append(constraintViolation.getMessage());
+                sb.append(System.lineSeparator());
+            }
+            throw new ConstraintViolationException(sb.toString(), violations);
+        }
         if (!user.getRawPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getRawPassword()));
         } else {

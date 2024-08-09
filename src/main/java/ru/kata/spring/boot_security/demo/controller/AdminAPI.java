@@ -13,20 +13,17 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
-import ru.kata.spring.boot_security.demo.validation.UserValidator;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
 public class AdminAPI {
-    private final UserValidator userValidator;
     private final UserService userService;
     private final RoleService roleService;
 
     @Autowired
-    public AdminAPI(UserValidator userValidator, UserService userService, RoleService roleService) {
-        this.userValidator = userValidator;
+    public AdminAPI(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }

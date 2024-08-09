@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.service;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import java.util.List;
 
 public interface UserService {
@@ -10,9 +11,9 @@ public interface UserService {
 
     User findByUsername(String username);
 
-    void create(User user);
+    void create(@Valid User user);
 
-    void update(User user);
+    void update(@Valid User user);
 
     List<User> findAll();
 

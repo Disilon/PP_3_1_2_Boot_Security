@@ -132,6 +132,7 @@
                                             <div>
                                                 <button type="submit" class="btn btn-success">Add new user</button>
                                             </div>
+                                            <span id="newUserError" class="text-danger"></span>
                                         </form>
                                     </div>
                                 </div>
@@ -209,6 +210,7 @@
                             <select class="form-select" id="rolesDelete" data-user-id="roles" size="2" multiple="multiple" disabled>
                             </select>
                             <br>
+                            <span id="deleteUserError" class="text-danger"></span>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" id="modalDeleteClose" data-bs-dismiss="modal">
@@ -260,6 +262,7 @@
                             <select class="form-select" id="rolesEdit" data-user-id="roles" size="2" multiple="multiple">
                             </select>
                             <br>
+                            <span id="editUserError" class="text-danger"></span>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" id="modalEditClose" data-bs-dismiss="modal">

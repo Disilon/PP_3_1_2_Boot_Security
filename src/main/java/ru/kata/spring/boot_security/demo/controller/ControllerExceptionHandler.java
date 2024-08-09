@@ -5,9 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
 
 
 @ControllerAdvice
@@ -19,5 +16,4 @@ public class ControllerExceptionHandler {
         logger.error(e.getMessage());
         return ResponseEntity.badRequest().body(e.getMessage());
     }
-
 }

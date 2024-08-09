@@ -1,7 +1,5 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import ru.kata.spring.boot_security.demo.validation.group.CreateAction;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +12,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,14 +23,12 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @NotEmpty(message = "Username shouldn't be empty")
     @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password")
     private String password;
 
-    @NotBlank(message = "Password shouldn't be empty", groups = CreateAction.class)
     @Transient
     private String rawPassword;
 

@@ -52,7 +52,7 @@ async function addNewUserForm() {
             allUsersData = await dataAboutAllUsers();
             await fillTableOfAllUsers();
         } else {
-            alert("Something went wrong");
+            document.getElementById("newUserError").innerHTML = await response.text();
         }
     });
 }
@@ -155,7 +155,7 @@ async function deleteUserSubmit() {
                     document.getElementById("modalDeleteClose").click();
                 }
             } else {
-                alert("Something went wrong");
+                document.getElementById("deleteUserError").innerHTML = await response.text();
             }
         }
     )
@@ -183,6 +183,9 @@ async function editUserSubmit() {
         let response = await editUserData(user);
         if (response.ok) {
             if(user.id == currentUserData.id) {
+                if(user.username != currentUserData.username) {
+                    window.location.href = "http://localhost:8080/logout";
+                }
                 currentUserData = await dataAboutCurrentUser();
                 await showUserOnNavbar();
                 await fillTableAboutCurrentUser();
@@ -191,7 +194,7 @@ async function editUserSubmit() {
             await fillTableOfAllUsers();
             document.getElementById("modalEditClose").click();
         } else {
-            alert("Something went wrong");
+            document.getElementById("editUserError").innerHTML = await response.text();
         }
     });
 }
